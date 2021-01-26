@@ -8,7 +8,25 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1 class="text-center">Welcome to Simple Bank Application</h1>
+    <div id="login-area">
+        <h1 class="text-center">Welcome to Simple Bank Application</h1>
+        <div class="submit-area">
+            <h4>Login</h4>
+            <input class="form-control" type="text" placeholder="Enter your Email">
+            <br>
+            <input class="form-control" type="password" placeholder="Enter your Password">
+            <br>
+            <button id="login-btn" class="btn btn-success ">Enter</button>
+        </div>
+    </div>
     
+    <script>
+        const loginBtn = document.getElementById("login-btn");
+        loginBtn.addEventListener("click",function(){
+          const loginArea = document.getElementById("login-area");
+          loginArea.style.display = "none";
+        })
+    </script>
+
 </body>
 </html>
