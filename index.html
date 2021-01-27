@@ -33,14 +33,14 @@
             <div class="col-md-4 ">
                 <div class="withdraw status">
                     <h5>Withdraw</h5>
-                <h2>$00</h2>
+                <h2>$<span id="existing-withdraw-amount">00</span></h2>
                 </div>
                 
             </div>
             <div class="col-md-4 ">
                 <div class="balance status">
                     <h5>Balance</h5>
-                    <h2>$<span id="current-balance">00</span></h2>
+                    <h2>$<span id="current-balance">1000</span></h2>
                 </div>
                 
             </div>
@@ -50,7 +50,7 @@
             <div class="col-md-6">
                 <div class="submit-area">
                     <h4>Deposit</h4>
-                    <input id="deposit-amount" class="form-control" type="text" placeholder="$amount you want to deposit">
+                    <input id="deposit-amount" class="form-control" type="text" placeholder="$amount you want to deposit" required>
                     <br>
                     <button id="deposit-btn" class="btn btn-success">Deposit</button>
                 </div> 
@@ -58,7 +58,7 @@
             <div class="col-md-6">
                 <div class="submit-area">
                     <h4>Withdraw</h4>
-                    <input class="form-control" type="text" placeholder="$amount you want to withdraw">
+                    <input id="withdraw-amount" class="form-control" type="text" placeholder="$amount you want to withdraw" required>
                     <br>
                     <button id="withdraw-btn" class="btn btn-success">Withdraw</button>
                 </div>
@@ -68,6 +68,9 @@
     
     <script>
         const loginBtn = document.getElementById("login-btn");
+
+       
+
         loginBtn.addEventListener("click",function(){
           const loginArea = document.getElementById("login-area");
           loginArea.style.display = "none";
@@ -77,28 +80,79 @@
          //deposit button functionality
          const depositBtn = document.getElementById("deposit-btn");
          depositBtn.addEventListener("click",function(){
-             // get value from inputs
-            const depositAmount = document.getElementById("deposit-amount").value;
-            const depositNumber = parseFloat(depositAmount);
             
-            //get any value from any area
-            const existingAmount = document.getElementById("current-deposit").innerText; 
-            const existingDepositNumber = parseFloat(existingAmount);
-
-            const totalDeposit = depositNumber+existingDepositNumber;
-            //displaying value in any area
-            document.getElementById("current-deposit").innerText = totalDeposit; 
-            //to set the textfield empty
+            if(document.getElementById("deposit-amount").value == "")
+             {
+            alert("empty")
+            }else{
+             const depositAmount = document.getElementById("deposit-amount").value;
+             const depositNumber = parseFloat(depositAmount);
+            
+            updateBalance("current-deposit", depositNumber);
+            updateBalance("current-balance", depositNumber);
             document.getElementById("deposit-amount").value="";
+            }
+            
+            // //get any value from any area
+            // const existingAmount = document.getElementById("current-deposit").innerText; 
+            // const existingDepositNumber = parseFloat(existingAmount);
 
-            //adding value to the current balance 
-            const currentBalance = document.getElementById("current-balance").innerText;
-            const currentBalanceNumber = parseFloat(currentBalance);
-            const totalBalance = currentBalanceNumber+depositNumber;
-            document.getElementById("current-balance").innerText=totalBalance;
+            // const totalDeposit = depositNumber+existingDepositNumber;
+            // //displaying value in any area
+            // document.getElementById("current-deposit").innerText = totalDeposit; 
+            //to set the textfield empty
+
+
+            // get value from inputs
+             
+            
+            // //adding value to the current balance 
+            //   const currentBalance = document.getElementById("current-balance").innerText;
+            //   const currentBalanceNumber = parseFloat(currentBalance);
+            //   const totalBalance = currentBalanceNumber+depositNumber;
+            //   document.getElementById("current-balance").innerText=totalBalance;
+
+           
 
          })
-          
+        function updateBalance(id, depositNumber){
+              const currentBalance = document.getElementById(id).innerText;
+              const currentBalanceNumber = parseFloat(currentBalance);
+              const totalBalance = currentBalanceNumber+depositNumber;
+              document.getElementById(id).innerText=totalBalance;
+ 
+        }
+         
+        //withdraw balance event handler
+
+        const withdrawBtn = document.getElementById("withdraw-btn");
+        withdrawBtn.addEventListener("click",function(){
+            if(document.getElementById("withdraw-amount").value == "")
+             {
+             alert("empty")
+            }else{
+
+        
+            const withdrawAmount = document.getElementById("withdraw-amount").value;
+            const withdrawAmountNumber = parseFloat(withdrawAmount);
+            const currentWithdraw = document.getElementById("existing-withdraw-amount").innerText;
+            const currentWithdrawNumber = parseFloat(currentWithdraw);
+
+            //getting the amount from current balance
+            const currentBalanceWithdraw = document.getElementById("current-balance").innerText;
+            const currentBalanceNumber = parseFloat(currentBalanceWithdraw);
+
+            const totalWithdraw = withdrawAmountNumber+currentWithdrawNumber;
+            const finalBalance = currentBalanceNumber - withdrawAmountNumber;
+
+            document.getElementById("existing-withdraw-amount").innerText=totalWithdraw;
+            document.getElementById("current-balance").innerText = finalBalance;
+            document.getElementById("withdraw-amount").value="";
+        }
+        })
+
+
+
     </script>
 
 </body>
